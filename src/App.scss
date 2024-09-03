@@ -1,0 +1,87 @@
+
+/* Custom Bootstrap Implementations */
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/utilities';
+
+// vh class addons
+$--vh-addons: (25: 25vh, 50: 50vh, 75: 75vh);
+$utilities: map-merge(
+    $utilities,
+    (
+        "viewport-height": map-merge(
+            map-get($utilities, "viewport-height"),
+            (
+                values: map-merge(
+                    map-get(map-get($utilities, "viewport-height"), "values"),
+                    $--vh-addons,
+                ),
+            ),
+        ),
+    )
+);
+
+$utilities: map-merge(
+    $utilities,
+    (
+        "min-viewport-height": map-merge(
+            map-get($utilities, "min-viewport-height"),
+            (
+                values: map-merge(
+                    map-get(map-get($utilities, "min-viewport-height"), "values"),
+                    $--vh-addons,
+                ),
+            ),
+        ),
+    )
+);
+
+/* Apply Bootstrap Changes */
+@import "bootstrap/scss/utilities/api";
+
+/* Personal changes */
+
+@mixin scrollbars(
+  $size: 1px,
+  $foreground-color: #e8e5e5,
+  $background-color: #fafafa
+) {
+  // For Chrome & Safari
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+  }
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  // Standard version (Firefox only for now)
+  scrollbar-color: $foreground-color $background-color;
+}
+
+html {
+    scroll-behavior: smooth;
+    @include scrollbars()
+}
+
+body {
+    background-color: #f8f8f8;
+    position: relative;
+}
+
+.navbar-main {
+    box-shadow: 0px 0px 7px 5px rgba(21, 21, 21, 0);
+    transition: 0.2s ease-in-out background-color;
+    transition: 0.2s ease-in-out box-shadow;
+}
+
+.navbar-show {
+    background-color: #fafafa;
+    box-shadow: 0px 0px 7px 5px rgba(21, 21, 21, 0.02);
+}
